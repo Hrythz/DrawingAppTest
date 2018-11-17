@@ -7,17 +7,11 @@
  */
 
 import React, {Component} from 'react';
-
-import { Platform, View, Text, StyleSheet, 
-  TouchableOpacity, Dimensions, CameraRoll } from 'react-native';
+import { Platform, View, Text, StyleSheet, TouchableOpacity, Dimensions, CameraRoll } from 'react-native';
 import { connect } from 'react-redux';
 
 import * as Colors from './src/utils/colors';
-// import { alert, confirmation } from 'utils/alert';
-
 import ColorBar from './src/components/ColorBar';
-// import DrawBoard from './components/DrawBoard';
-// import Header from './components/Header';
 
 type Props = {};
 class App extends Component<Props> {
