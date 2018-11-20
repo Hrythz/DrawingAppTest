@@ -20,7 +20,7 @@ class ColorPalette extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* call renderOptions method to display colors palette */}
+        {/* call renderOptions method to display choices of color */}
         {this.colorOptions()}
       </View>
     );
