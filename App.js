@@ -17,6 +17,8 @@ import * as Colors from './src/utils/colors';
 import ColorBar from './src/components/ColorBar';
 import DrawingCanvas from './src/components/DrawingCanvas';
 
+import { getActualPaths, getCurrentStep, addPath } from './src/actions';
+
 type Props = {};
 class App extends Component<Props> {
   constructor(props) {
@@ -29,15 +31,17 @@ class App extends Component<Props> {
       // set state.strokeWidth to 4
       strokeWidth: 4,
       // initialize draw path in state.donePaths
-      donePaths: []
+      paths: []
     };
 
     this.setDonePaths = this.setDonePaths.bind(this);
   }
 
   // set new path to state.donePaths
-  setDonePaths = (donePaths) => {
-    this.setState({ donePaths });
+  setDonePaths = (paths) => {
+    //this.setState({ paths });
+    this.props.addPath(paths);
+    console.log(paths);
   }
 
   // set selected color to state.color
@@ -47,6 +51,9 @@ class App extends Component<Props> {
 
   render() {
     console.log("inside render method...");
+    console.log(this.props);
+    // console.log(this.state);
+    console.log('currentStep: ' + this.props.currentStep);
     const { screen, container, title, text, content } = styles;
     return (
       <View style={styles.screen}>
@@ -61,7 +68,7 @@ class App extends Component<Props> {
         {/* display drawing canvas bar */}
         <DrawingCanvas
           ref={(view) => { this._DrawingCanvas = view; }}
-          donePaths={this.state.donePaths}
+          paths={this.state.paths}
           setDonePaths={this.setDonePaths}
           containerStyle={styles.content}
           width={Dimensions.get('window').width - 20}
@@ -106,14 +113,21 @@ const styles = StyleSheet.create({
   },
 });
 
+/*
 function mapStateToProps(state) {
+  console.log('inside mapStateToProps function...');
   return {
-    // map state properties here e.g: state.people, state.counter
-    // simple integer can simply map to state, which is equal to state.value
-    color: state.color,
-    strokeWidth: state.strokeWidth,
-    donePaths: state.donePaths
+    // map state.Draw properties from index.js reducer file to each variable here
+    // state.Draw represents drawReducer.js as object
+    paths: state.Draw.paths,
+    currentStep: state.Draw.currentStep
   }
 }
+*/
 
-export default connect(mapStateToProps, null)(App);
+const mapStateToProps = store => ({
+  paths: getActualPaths(store),
+  currentStep: getCurrentStep(store),
+});
+
+export default connect(mapStateToProps, { getActualPaths, getCurrentStep, addPath })(App);

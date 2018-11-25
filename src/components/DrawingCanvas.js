@@ -3,7 +3,7 @@ import { View, PanResponder, StyleSheet } from 'react-native';
 import Svg, { G, Path } from 'react-native-svg';
 import Reaction from './Reaction';
 
-export default class SignatureView extends React.Component {
+export default class DrawingCanvas extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -32,7 +32,7 @@ export default class SignatureView extends React.Component {
     newCurrentPoints.push({ x, y });
 
     this.setState({
-      donePaths: this.props.donePaths,
+      paths: this.props.paths,
       currentPoints: newCurrentPoints,
       currentMax: this.state.currentMax
     });
@@ -50,7 +50,7 @@ export default class SignatureView extends React.Component {
 
   // when touch released, run this method
   onResponderRelease() {
-    const newPaths = this.props.donePaths;
+    const newPaths = this.props.paths;
     if (this.state.currentPoints.length > 0) {
       // 
       newPaths.push(
@@ -97,7 +97,7 @@ export default class SignatureView extends React.Component {
             height={this.props.height}
           >
             <G>
-              {this.props.donePaths}
+              {this.props.paths}
               <Path
                 key={this.state.currentMax}
                 d={this.state.reaction.pointsToSvg(this.state.currentPoints)}
